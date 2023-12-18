@@ -215,7 +215,7 @@ router.put('/change-password/:id', function (req, res) {
  * GET USER
  */
 
-router.get('/:id', function (req, res) {
+router.get('/users/:id', function (req, res) {
   let id = req.params.id;
 
   connection.query(`SELECT name, email, level, total_pts, exp, created_at FROM users WHERE userId = ${id}`, function (err, rows) {
