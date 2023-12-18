@@ -51,3 +51,6 @@
 | /api/javaneses/:id | GET | Get Javanese word details by :id. Retrieves details of a specific Javanese word |
 | /api/javaneses/update/:id | GET | Update Javanese word identified by :id. Modifies existing Javanese word details |
 | /api/javaneses/delete/:id | GET | Delete Javanese word identified by :id. Removes a Javanese word |
+
+## CREDIT
+[Zaenal Alfian](https://www.github.com/astrocoding "Zaenal Alfian's Github")
