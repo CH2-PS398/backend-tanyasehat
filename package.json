@@ -1,14 +1,14 @@
 {
-  "name": "express-api",
+  "name": "tanyasaja",
   "version": "1.0.0",
-  "description": "Belajar Rest Api dengan Express",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "start-dev": "nodemon index.js"
   },
-  "author": "Zaenal Alfian",
+  "author": "Andre",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

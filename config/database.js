@@ -1,11 +1,10 @@
 let mysql = require('mysql');
-require('dotenv').config();
 
 let conn = mysql.createConnection({
-  host: '34.101.172.111',
+  host: '34.128.104.141',
   user: 'root',
-  password: 'nusalingo2023',
-  database : 'db_nusalingo'
+  password: 'andretham123',
+  database : 'db_tanyasehat'
 });
 
 conn.connect((err) => {

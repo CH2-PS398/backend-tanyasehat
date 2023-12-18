@@ -7,11 +7,7 @@ const uuid = require('uuid');
 const connection = require('../config/database');
 const { body, validationResult } = require('express-validator');
 
-/**
- * REGISTER USER
- */
-
-router.post('/signup', [
+router.post('/register', [
 
   //validation
   body('name').notEmpty(),
@@ -28,11 +24,6 @@ router.post('/signup', [
     });
   }
 
-  // Add array and randomize keys
-  let thumbs = ['Garfield', 'Ginger', 'Cleo', 'Willow', 'Jasmine', 'Sassy', 'Milo', 'Socks', 'Kitty', 'Gizmo', 'Abby', 'Simba', 'Oliver', 'Dusty', 'Lucky', 'Angel', 'Spooky', 'Zoey', 'Buddy', 'Smokey'];
-  let randomKey = Math.floor(Math.random() * thumbs.length);
-  let randomThumb = thumbs[randomKey];
-  let avatar = `https://api.dicebear.com/7.x/thumbs/svg?seed=${randomThumb}`;
 
   let hashedPassword = bcrypt.hashSync(req.body.password, 10);
   let token = uuid.v4();
@@ -40,9 +31,8 @@ router.post('/signup', [
   //define formData
   let formData = {
     name: req.body.name,
-    email: req.body.email,
+    email: req.body.email,  
     password: hashedPassword,
-    avatar: avatar,
     token: token,
     created_at: new Date(),
     updated_at: new Date()
@@ -84,11 +74,8 @@ router.post('/signup', [
   });
 });
 
-/**
- * LOGIN USER
- */
 
-router.post('/signin', function (req, res) {
+router.post('/login', function (req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
@@ -134,91 +121,12 @@ router.post('/signin', function (req, res) {
   });
 });
 
-/**
- * CHANGE PASSWORD
- */
 
-router.put('/change-password/:id', function (req, res) {
-  let id = req.params.id;
-  let oldPassword = req.body.oldPassword;
-  let confirmPassword = req.body.confirmPassword;
-  let newPassword = req.body.newPassword;
-
-  // Check if oldPassword and confirmPassword match
-  if (oldPassword !== confirmPassword) {
-    return res.status(400).json({
-      status: false,
-      message: 'Old password and confirm password do not match!'
-    });
-  }
-
-  // Compare the oldPassword with the current password in the database
-  connection.query('SELECT * FROM users WHERE userId = ?', id, function (err, rows) {
-    if (err) {
-      return res.status(500).json({
-        status: false,
-        message: 'Internal Server Error',
-      });
-    } else {
-      if (rows.length === 0) {
-        return res.status(400).json({
-          status: false,
-          message: 'User not found!'
-        });
-      } else {
-        bcrypt.compare(oldPassword, rows[0].password, function (err, result) {
-          if (err) {
-            return res.status(500).json({
-              status: false,
-              message: 'Internal Server Error',
-            });
-          } else {
-            if (result) {
-              // Hash the new password
-              bcrypt.hash(newPassword, 10, function (err, hashedPassword) {
-                if (err) {
-                  return res.status(500).json({
-                    status: false,
-                    message: 'Internal Server Error',
-                  });
-                } else {
-                  // Update the password and updated_at field in the database
-                  connection.query('UPDATE users SET password = ?, updated_at = ? WHERE userId = ?', [hashedPassword, new Date(), id], function (err, result) {
-                    if (err) {
-                      return res.status(500).json({
-                        status: false,
-                        message: 'Internal Server Error',
-                      });
-                    } else {
-                      return res.status(200).json({
-                        status: true,
-                        message: 'Password changed successfully'
-                      });
-                    }
-                  });
-                }
-              });
-            } else {
-              return res.status(400).json({
-                status: false,
-                message: 'Old password is incorrect!'
-              });
-            }
-          }
-        });
-      }
-    }
-  });
-});
-
-/**
- * GET USER
- */
 
 router.get('/users/:id', function (req, res) {
   let id = req.params.id;
 
-  connection.query(`SELECT name, email, level, total_pts, exp, created_at FROM users WHERE userId = ${id}`, function (err, rows) {
+  connection.query(`SELECT name, email, created_at FROM users WHERE userId = ${id}`, function (err, rows) {
     if(err) {
       return res.status(500).json({
         status: false,
