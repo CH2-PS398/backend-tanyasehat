@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /**
- * ROUTES
+ * ROUTES ENDPOINT
  */
 
 // import route quiz
