@@ -4,4 +4,5 @@
 | /api/auth/login  | User returns authentication token on successful login  |
 
 **| Credit |**
-| https://github.com/XiaoDreT?plain=1 |
+| ------------- |
+| Andre?plain=https://github.com/XiaoDreT |
