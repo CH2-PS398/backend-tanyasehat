@@ -1,0 +1,8 @@
+
+# Ignore .env files
+/.env
+/auth/.env
+
+# Ignore node_modules
+/node_modules
+/auth/node_modules
